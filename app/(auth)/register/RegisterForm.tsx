@@ -9,14 +9,28 @@ import { useForm } from 'react-hook-form';
 import { GiPadlock } from 'react-icons/gi';
 
 const RegisterForm = () => {
-    const { register, handleSubmit, formState: { errors, isValid } } = useForm<RegisterSchema>({
+    const { register, handleSubmit,setError, formState: { errors, isValid,isSubmitting } } = useForm<RegisterSchema>({
         resolver: zodResolver(registerSchema),
         mode: "onTouched"
     });
 
     const onSubmit = async (data: RegisterSchema) => {
         const result = await registerUser(data);
-        console.log(result);
+        
+        if(result.status==="success"){
+            console.log('User registered successfully');
+        }
+        else{
+            if(Array.isArray(result.error)){
+                result.error.forEach((e)=>{
+                    const fieldName=e.path.join('.') as "name" | "email" | "password";
+                    setError(fieldName,{message:e.message});
+                })
+            }
+            else{
+                setError("root.serverError",{message:result.error});
+            }
+        }
     }
 
     return (
@@ -39,7 +53,10 @@ const RegisterForm = () => {
                             isInvalid={!!errors.email} errorMessage={errors.email?.message as string} />
                         <Input defaultValue="" label="Password" variant="bordered" type="Password" {...register("password")}
                             isInvalid={!!errors.password} errorMessage={errors.password?.message as string} />
-                        <Button fullWidth color="secondary" type="submit" isDisabled={!isValid}>Register</Button>
+                            {errors.root?.serverError && (
+                                <p className='text-danger-50 text-sm'>{errors.root.serverError.message}</p>
+                            )}
+                        <Button isLoading={isSubmitting} fullWidth color="secondary" type="submit" isDisabled={!isValid}>Register</Button>
                     </div>
                 </form>
             </CardBody>
