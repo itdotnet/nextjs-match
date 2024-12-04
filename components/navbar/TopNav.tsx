@@ -3,8 +3,10 @@ import Link from 'next/link'
 import React from 'react'
 import { GiMatchTip } from 'react-icons/gi'
 import NavLink from './NavLink'
+import { auth } from '@/auth'
 
-const TopNav = () => {
+const TopNav =async () => {
+    const session=await auth();
     return (
         <Navbar maxWidth='xl' className='bg-gradient-to-r from-purple-400 to-purple-700'
             classNames={{
