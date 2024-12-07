@@ -1,4 +1,4 @@
-import { signOut } from '@/auth'
+import { signOutUser } from '@/app/actions/authActions'
 import { Avatar, Dropdown, DropdownItem, DropdownMenu, DropdownSection, DropdownTrigger } from '@nextui-org/react'
 import { Session } from 'next-auth'
 import Link from 'next/link'
@@ -30,7 +30,7 @@ const UserMenu = ({user}:Props) => {
                 <DropdownItem as={Link} href="/members/edit">
                     Edit Profile
                 </DropdownItem>
-                <DropdownItem color="danger" onClick={async()=>signOut()}>
+                <DropdownItem color="danger" onClick={async()=>signOutUser()}>
                     Log out
                 </DropdownItem>
             </DropdownSection>
