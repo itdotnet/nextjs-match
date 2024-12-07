@@ -1,3 +1,5 @@
+'use client';
+
 import { signOutUser } from '@/app/actions/authActions'
 import { Avatar, Dropdown, DropdownItem, DropdownMenu, DropdownSection, DropdownTrigger } from '@nextui-org/react'
 import { Session } from 'next-auth'
@@ -27,13 +29,13 @@ const UserMenu = ({user}:Props) => {
                 <DropdownItem isReadOnly as='span' className='h-14 flex flex-row' aria-label='username'>
                     Signed in as {user?.name}
                 </DropdownItem>
-                <DropdownItem as={Link} href="/members/edit">
-                    Edit Profile
-                </DropdownItem>
-                <DropdownItem color="danger" onClick={async()=>signOutUser()}>
-                    Log out
-                </DropdownItem>
             </DropdownSection>
+            <DropdownItem as={Link} href="/members/edit">
+                Edit Profile
+            </DropdownItem>
+            <DropdownItem color="danger" onClick={async()=>signOutUser()}>
+                Log out
+            </DropdownItem>
         </DropdownMenu>
     </Dropdown>
   )
