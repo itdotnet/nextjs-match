@@ -1,14 +1,16 @@
 import React from 'react'
 import { getMembers } from '../actions/memberActions'
 
-const MembersPage =async () => {
-    const members=await getMembers();
+const MembersPage = async () => {
+    const members = await getMembers();
 
     return (
         <div>
-            {members && members.map((member,index)=>(
-                <li key={index}>{member.name}</li>
-            ))}
+            <ul>
+                {members && members.map(member => (
+                    <li key={member.id}>{member.name}</li>
+                ))}
+            </ul>
         </div>
     )
 }
