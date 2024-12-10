@@ -1,11 +1,11 @@
-import { getMemberById } from '@/app/actions/memberActions'
+import { getMemberByUserId } from '@/app/actions/memberActions'
 import { notFound } from 'next/navigation';
 import React, { ReactNode } from 'react'
 import MemberSidebar from '../MemberSidebar';
 import { Card } from '@nextui-org/react';
 
 const layout =async ({children,params}:{children:ReactNode,params:{userId:string}}) => {
-    const member=await getMemberById(params.userId);
+    const member=await getMemberByUserId(params.userId);
 
     if(!member) return notFound();
 
