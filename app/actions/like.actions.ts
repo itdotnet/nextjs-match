@@ -1,3 +1,5 @@
+'use server';
+
 import { prisma } from "@/lib/prisma";
 import { getAuthUserId } from "./authActions";
 
