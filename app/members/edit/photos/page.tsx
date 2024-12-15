@@ -1,9 +1,8 @@
 import { getAuthUserId } from '@/app/actions/authActions';
 import { getMemberPhotosByUserId } from '@/app/actions/memberActions'
-import { CardHeader, Divider, CardBody } from '@nextui-org/react';
+import { CardHeader, Divider, CardBody, Image } from '@nextui-org/react';
 import React from 'react'
-import EditForm from '../EditForm';
-import Image from 'next/image';
+
 
 const PhotoPage =async () => {
     const userId=await getAuthUserId();
