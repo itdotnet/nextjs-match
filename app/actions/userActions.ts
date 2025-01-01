@@ -62,7 +62,7 @@ export async function addImage(url: string, fileKey: string) {
           create: [
             {
               url,
-              publicId: fileKey,
+              fileKey,
             },
           ],
         },
@@ -97,7 +97,7 @@ export async function deleteImage(photo: Photo) {
   try {
     const userId = await getAuthUserId();
 
-    if (photo.publicId) {
+    if (photo.fileKey) {
       const s3 = new S3({
         accessKeyId: process.env.LIARA_ACCESS_KEY,
         secretAccessKey: process.env.LIARA_SECRET_KEY,
@@ -106,12 +106,12 @@ export async function deleteImage(photo: Photo) {
 
       await s3.deleteObject({
         Bucket: process.env.LIARA_BUCKET_NAME!,
-        Key: photo.publicId,
-      });
+        Key: photo.fileKey,
+      }).promise();
     }
 
     return prisma.member.update({
-      where: { id: userId },
+      where: { userId },
       data: {
         photos: {
           delete: { id: photo.id },
