@@ -61,7 +61,7 @@ Props) => {
       });
 
       //onUpload(response);
-      await addImage(permanentSignedUrl);
+      await addImage(permanentSignedUrl, file.name);
       router.refresh();
       console.log("File uploaded successfully");
     } catch (error) {

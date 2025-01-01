@@ -8,9 +8,11 @@ import { ActionResult } from "@/types";
 import { Member, Photo } from "@prisma/client";
 import { getAuthUserId } from "./authActions";
 import { prisma } from "@/lib/prisma";
+import { S3 } from "aws-sdk";
 
 export async function updateMemberProfile(
-  data: MemberEditSchema
+  data: MemberEditSchema,
+  nameUpdated: boolean
 ): Promise<ActionResult<Member>> {
   try {
     const userId = await getAuthUserId();
@@ -21,6 +23,13 @@ export async function updateMemberProfile(
       return { status: "error", error: validated.error.errors };
 
     const { name, description, city, country } = validated.data;
+
+    if (nameUpdated) {
+      await prisma.user.update({
+        where: { id: userId },
+        data: { name },
+      });
+    }
 
     const member = await prisma.member.update({
       where: {
@@ -42,7 +51,7 @@ export async function updateMemberProfile(
   }
 }
 
-export async function addImage(url: string) {
+export async function addImage(url: string, fileKey: string) {
   try {
     const userId = await getAuthUserId();
 
@@ -53,6 +62,7 @@ export async function addImage(url: string) {
           create: [
             {
               url,
+              publicId: fileKey,
             },
           ],
         },
@@ -70,13 +80,57 @@ export async function setMainImage(photo: Photo) {
 
     await prisma.user.update({
       where: { id: userId },
-      data: {image:photo.url}
+      data: { image: photo.url },
     });
 
     return prisma.member.update({
-      where:{userId},
-      data:{image:photo.url}
-    })
+      where: { userId },
+      data: { image: photo.url },
+    });
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+export async function deleteImage(photo: Photo) {
+  try {
+    const userId = await getAuthUserId();
+
+    if (photo.publicId) {
+      const s3 = new S3({
+        accessKeyId: process.env.LIARA_ACCESS_KEY,
+        secretAccessKey: process.env.LIARA_SECRET_KEY,
+        endpoint: process.env.LIARA_ENDPOINT,
+      });
+
+      await s3.deleteObject({
+        Bucket: process.env.LIARA_BUCKET_NAME!,
+        Key: photo.publicId,
+      });
+    }
+
+    return prisma.member.update({
+      where: { id: userId },
+      data: {
+        photos: {
+          delete: { id: photo.id },
+        },
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+export async function getUserInfoForNav() {
+  try {
+    const userId = await getAuthUserId();
+    return prisma.user.findUnique({
+      where: { id: userId },
+      select: { name: true, image: true },
+    });
   } catch (error) {
     console.log(error);
     throw error;
