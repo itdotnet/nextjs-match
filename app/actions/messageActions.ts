@@ -7,31 +7,28 @@ import { ActionResult } from "@/types";
 import { Message } from "@prisma/client";
 import { mapMessageToMessageDto } from "@/lib/mappings";
 
-export async function createMessage(recipientUserId:string,data:MessageSchema):Promise<ActionResult<Message>>{
+export async function createMessage (
+    recipeintId: string, data: MessageSchema): Promise<ActionResult<Message>> {
     try {
-        
-    const userId=await getAuthUserId();
-
-    const validated=messageSchema.safeParse(data);
-
-    if(!validated.success) return {status:'error',error:validated.error.errors};
-
-    const {text}=validated.data;
-
-    const message=await prisma.message.create({
-        data:{
-                text,
-                recipientId:recipientUserId,
-                senderId:userId
-            }
-    });
-
-    return {status:'success',data:message};
+      const userId = await getAuthUserId()
+      const validated = messageSchema.safeParse(data)
+      if (!validated.success) {
+        return { status: 'error', error: validated.error.errors }
+      }
+      const { text } = validated.data
+      const messwage = await prisma.message.create({
+        data: {
+          text,
+          senderId: userId,
+          recipientId: recipeintId,
+        },
+      })
+      return { status: 'success', data: messwage }
     } catch (error) {
-        console.log(error);
-        return {status:'error',error:"Something went wrong"};   
+      console.error(error)
+      return { status: 'error', error: 'Something went wrong!' }
     }
-}
+  }
 
 export async function getMessageThread(recipientId:string){
     try {
