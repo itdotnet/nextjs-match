@@ -8,6 +8,9 @@ const nextConfig: NextConfig = {
         'localhost:3000',
         'cautious-funicular-jj6wv454xg7359qv-3000.app.github.dev',
       ]
+    },
+    staleTimes:{
+      dynamic:0
     }
   }
 };
