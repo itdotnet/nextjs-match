@@ -1,5 +1,10 @@
 "use server";
 
+
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+require('aws-sdk/lib/maintenance_mode_message').suppress = true;
+
+
 import {
   memberEditSchema,
   MemberEditSchema,
