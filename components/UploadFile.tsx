@@ -1,6 +1,9 @@
 "use client";
 
-import React, { RefObject, useRef, useState } from "react";
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+require('aws-sdk/lib/maintenance_mode_message').suppress = true;
+
+import React, { useState } from "react";
 import { S3 } from "aws-sdk";
 import { PutObjectRequest } from "aws-sdk/clients/s3";
 import { HiPhoto } from "react-icons/hi2";
@@ -22,12 +25,13 @@ const UploadFile = ({
   endpoint,
   bucket,
 }: //onUpload,
-Props) => {
+  Props) => {
   const router = useRouter();
 
   const [file, setFile] = useState<File | null>(null);
   const [error, setError] = useState<string | null>(null);
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleFileChange = (event: any) => {
     setFile(event.target.files[0]);
     setError(null);
@@ -52,7 +56,7 @@ Props) => {
         Body: file,
       };
 
-      const response = await s3.upload(params).promise();
+      await s3.upload(params).promise();
       // Get permanent link
       const permanentSignedUrl = s3.getSignedUrl("getObject", {
         Bucket: bucket,

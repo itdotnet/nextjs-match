@@ -2,17 +2,17 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   /* config options here */
-  experimental: {
-    serverActions: {
-      allowedOrigins: [
-        'localhost:3000',
-        'cautious-funicular-jj6wv454xg7359qv-3000.app.github.dev',
-      ]
-    },
-    staleTimes:{
-      dynamic:0
-    }
-  }
+  // experimental: {
+  //   // serverActions: {
+  //   //   allowedOrigins: [
+  //   //     'localhost:3000',
+  //   //     'cautious-funicular-jj6wv454xg7359qv-3000.app.github.dev',
+  //   //   ]
+  //   // },
+  //   staleTimes:{
+  //     dynamic:0
+  //   }
+  // }
 };
 
 export default nextConfig;

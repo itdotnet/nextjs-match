@@ -14,9 +14,9 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const session=await auth();
+  const session = await auth();
 
-  const userId=session?.user?.id || null;
+  const userId = session?.user?.id || null;
 
   return (
     <html lang="en">
@@ -27,5 +27,5 @@ export default async function RootLayout({
         </Providers>
       </body>
     </html>
-  );
+  )
 }

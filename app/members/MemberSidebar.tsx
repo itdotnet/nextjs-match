@@ -1,7 +1,7 @@
 'use client';
 
 import PresenceDot from '@/components/PresenceDot';
-import { calculateAge } from '@/lib/util';
+import { calculateAge, transformImageUrl } from '@/lib/util';
 import { Button, Card, CardBody, CardFooter, Divider, Image } from '@nextui-org/react';
 import { Member } from '@prisma/client/wasm';
 import Link from 'next/link';
@@ -21,7 +21,7 @@ const MemberSidebar = ({ member, navLinks }: Props) => {
             <Image
                 width={200}
                 height={200}
-                src={member.image || '/images/user.png'}
+                src={transformImageUrl(member.image) || '/images/user.png'}
                 alt='user profile main image'
                 className='rounded-full mt-6 aspect-square object-cover'
             />
@@ -32,10 +32,10 @@ const MemberSidebar = ({ member, navLinks }: Props) => {
                             {member.name}, {calculateAge(member.dateOfBirth)}
                         </div>
                         <div>
-                            <PresenceDot member={member}/>
+                            <PresenceDot member={member} />
                         </div>
                     </div>
-                    
+
                     <div className='text-sm text-neutral-500'>
                         {member.city}, {member.country}
                     </div>
