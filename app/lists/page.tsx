@@ -3,8 +3,9 @@ import { fetchCurrentUserLikeIds, fetchLikedMembers } from '../actions/like.acti
 import ListsTab from './ListsTab';
 
 const ListsPage =async ({searchParams}:{searchParams:{type:string}}) => {
+    const {type}=await searchParams;
     const likeIds=await fetchCurrentUserLikeIds();
-    const members=await fetchLikedMembers(searchParams.type);
+    const members=await fetchLikedMembers(type);
 
     return (
         <div>

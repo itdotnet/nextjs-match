@@ -3,7 +3,8 @@ import { CardHeader, Divider, CardBody, Image } from '@nextui-org/react'
 import React from 'react'
 
 const PhotoPage =async ({params}:{params:{userId:string}}) => {
-  const photos=await getMemberPhotosByUserId(params.userId);
+  const {userId}=await params;
+  const photos=await getMemberPhotosByUserId(userId);
   return (
     <>
       <CardHeader className='text-2xl font-semibold text-secondary'>
