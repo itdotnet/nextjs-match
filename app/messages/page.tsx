@@ -13,7 +13,7 @@ const MessagesPage =async ({searchParams}:{searchParams:{container:string}}) => 
                 <MessageSidebar/>
             </div>
             <div className='col-span-10'>
-                <MessageTable messages={messages}/>
+                <MessageTable initialMessages={messages}/>
             </div>
         </div>
     )
