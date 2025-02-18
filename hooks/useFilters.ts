@@ -2,8 +2,9 @@ import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { FaMale, FaFemale } from "react-icons/fa";
 import useFilterStore from "./useFilterStore";
-import { useEffect } from "react";
-import {Selection} from '@nextui-org/react';
+import { useEffect, useTransition } from "react";
+import { Selection } from '@nextui-org/react';
+import usePaginationStore from "./usePaginationStore";
 
 export const useFilters = () => {
     const router = useRouter();
@@ -13,15 +14,26 @@ export const useFilters = () => {
 
     const { ageRange, gender, orderBy } = filters;
 
+    const [isPending, startTransition] = useTransition();
+
+    const {pageNumber,pageSize}=usePaginationStore(state=>({
+        pageNumber:state.pagination.pageNumber,
+        pageSize:state.pagination.pageSize
+    }))
+
     useEffect(() => {
-        const searchParams = new URLSearchParams();
+        startTransition(() => {
+            const searchParams = new URLSearchParams();
 
-        if (gender) searchParams.set('gender', gender.join(','));
-        if (ageRange) searchParams.set('ageRange', ageRange.toString());
-        if (orderBy) searchParams.set('orderBy', orderBy);
+            if (gender) searchParams.set('gender', gender.join(','));
+            if (ageRange) searchParams.set('ageRange', ageRange.toString());
+            if (orderBy) searchParams.set('orderBy', orderBy);
+            if(pageSize) searchParams.set('pageSize',pageSize.toString());
+            if(pageNumber) searchParams.set('pageNumber',pageNumber.toString());
 
-        router.replace(`${pathname}?${searchParams}`);
-    }, [ageRange, gender, orderBy, pathname, router])
+            router.replace(`${pathname}?${searchParams}`);
+        });
+    }, [ageRange, gender, orderBy, pathname, router,pageNumber,pageSize])
 
 
     const orderByList = [
@@ -36,7 +48,7 @@ export const useFilters = () => {
 
 
     const handleAgeSelect = (value: number[]) => {
-        setFilter('ageRange',value);
+        setFilter('ageRange', value);
     }
 
     const handleOrderSelect = (value: Selection) => {
@@ -46,16 +58,17 @@ export const useFilters = () => {
     }
 
     const handleGenderSelect = (value: string) => {
-        if(gender.includes(value)) setFilter('gender',gender.filter(g=>g!==value));
-        else setFilter('gender',[...gender,value]);
+        if (gender.includes(value)) setFilter('gender', gender.filter(g => g !== value));
+        else setFilter('gender', [...gender, value]);
     }
 
-    return{
+    return {
         orderByList,
         genderList,
-        selectAge:handleAgeSelect,
-        selectGender:handleGenderSelect,
-        selectOrder:handleOrderSelect,
-        filters
+        selectAge: handleAgeSelect,
+        selectGender: handleGenderSelect,
+        selectOrder: handleOrderSelect,
+        filters,
+        isPending
     }
 }
