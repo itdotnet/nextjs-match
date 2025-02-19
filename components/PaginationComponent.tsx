@@ -5,9 +5,7 @@ import { Pagination } from '@nextui-org/react'
 import clsx from 'clsx'
 import React, { useEffect, useState } from 'react'
 
-const PaginationComponent = () => {
-    const totalCount=20;
-
+const PaginationComponent = ({totalCount}:{totalCount:number}) => {
     const {pagination,setPage,setPageSize,setPagination}=usePaginationStore(state=>({
         pagination:state.pagination,
         setPage:state.setPage,
@@ -19,7 +17,7 @@ const PaginationComponent = () => {
 
     useEffect(() => {
         setPagination(totalCount);
-    }, [setPagination])
+    }, [setPagination,totalCount])
     
 
     const start=(pageNumber-1) * pageSize + 1;

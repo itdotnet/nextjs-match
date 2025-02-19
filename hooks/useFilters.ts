@@ -16,9 +16,10 @@ export const useFilters = () => {
 
     const [isPending, startTransition] = useTransition();
 
-    const {pageNumber,pageSize}=usePaginationStore(state=>({
+    const {pageNumber,pageSize,setPage}=usePaginationStore(state=>({
         pageNumber:state.pagination.pageNumber,
-        pageSize:state.pagination.pageSize
+        pageSize:state.pagination.pageSize,
+        setPage:state.setPage
     }))
 
     useEffect(() => {
@@ -35,6 +36,11 @@ export const useFilters = () => {
         });
     }, [ageRange, gender, orderBy, pathname, router,pageNumber,pageSize])
 
+    useEffect(() => {
+        if(gender || ageRange || orderBy)
+            setPage(1);
+    }, [gender,ageRange,orderBy,setPage])
+    
 
     const orderByList = [
         { label: 'Last active', value: 'updated' },
