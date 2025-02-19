@@ -42,7 +42,7 @@ export async function getMembers({
         },
       }
     });
-console.log(limit);
+
     const members=await prisma.member.findMany({
       where: {
         AND:[
