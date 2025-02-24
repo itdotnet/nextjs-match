@@ -23,6 +23,8 @@ export const useMessages=(initialMessages:MessageDto[],nextCursor?:string)=>{
 
     useEffect(() => {
       set(initialMessages);
+
+      cursorRef.current=nextCursor;
     
       return () => {
         resetMessages();

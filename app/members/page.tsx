@@ -7,8 +7,8 @@ import { GetMemberParams } from '@/types';
 import EmptyState from '@/components/EmptyState';
 
 const MembersPage = async ({ searchParams }: { searchParams: GetMemberParams }) => {
-    const { ageRange, gender, orderBy,pageNumber,pageSize } = await searchParams;
-    const {items:members,totalCount} = await getMembers({ ageRange, gender, orderBy,pageNumber,pageSize });
+    const { ageRange, gender, orderBy,withPhoto,pageNumber,pageSize } = await searchParams;
+    const {items:members,totalCount} = await getMembers({ ageRange, gender, orderBy,withPhoto,pageNumber,pageSize });
     const likeIds = await fetchCurrentUserLikeIds();
 
     return (

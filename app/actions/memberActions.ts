@@ -11,6 +11,7 @@ export async function getMembers({
   ageRange='18,100',
   gender='male,female',
   orderBy='updated',
+  withPhoto='true',
   pageNumber='1',
   pageSize='12'
 }:GetMemberParams):Promise<PaginatedResponse<Member>> {
@@ -28,14 +29,14 @@ export async function getMembers({
 
   const skip=(page-1) * limit;
 
-
   try {
     const count=await prisma.member.count({
       where: {
         AND:[
           {dateOfBirth:{gte:minDob}},
           {dateOfBirth:{lte:maxDob}},
-          {gender:{in:selectedGender}}
+          {gender:{in:selectedGender}},
+          ...(withPhoto==='true'?[{image:{not:null}}]:[])
         ],
         NOT: {
           userId
@@ -48,7 +49,8 @@ export async function getMembers({
         AND:[
           {dateOfBirth:{gte:minDob}},
           {dateOfBirth:{lte:maxDob}},
-          {gender:{in:selectedGender}}
+          {gender:{in:selectedGender}},
+          ...(withPhoto==='true'?[{image:{not:null}}]:[])
         ],
         NOT: {
           userId
