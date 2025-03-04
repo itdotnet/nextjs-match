@@ -9,7 +9,7 @@ import React, { ReactNode, useCallback, useEffect, useRef } from 'react'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-export const Providers = ({ children,userId }: { children: ReactNode,userId:string | null}) => {
+export const Providers = ({ children,userId,profileComplete }: { children: ReactNode,userId:string | null,profileComplete:boolean}) => {
     const isUnreadCountSet=useRef(false);
     const {updateUnreadCount}=useMessageStore(state=>({
         updateUnreadCount:state.updateUnreadCount
@@ -30,8 +30,8 @@ export const Providers = ({ children,userId }: { children: ReactNode,userId:stri
     }, [setUnreadCount,userId])
     
 
-    usePresenceChannel();
-    useNotificationChannel(userId);
+    usePresenceChannel(userId,profileComplete);
+    useNotificationChannel(userId,profileComplete);
 
     return (
         <NextUIProvider>
