@@ -35,8 +35,21 @@ async function seedMembers(){
     }))
 }
 
+async function seedAdmin(){
+    await prisma.user.create({
+        data:{
+            email:'admin@test.com',
+            emailVerified:new Date(),
+            name:'Admin',
+            passwordHash:await hash('506903admin',10),
+            role:'ADMIN'
+        }
+    });
+}
+
 async function main() {
     await seedMembers();
+    await seedAdmin();
 }
 
 main().catch(e=>{
