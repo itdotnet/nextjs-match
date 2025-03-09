@@ -7,7 +7,7 @@ import React, { useState } from "react";
 import { S3 } from "aws-sdk";
 import { PutObjectRequest } from "aws-sdk/clients/s3";
 import { HiPhoto } from "react-icons/hi2";
-import { Button } from "@nextui-org/react";
+import { Button, Spinner } from "@nextui-org/react";
 import { addImage } from "@/app/actions/userActions";
 import { useRouter } from "next/navigation";
 
@@ -30,6 +30,7 @@ const UploadFile = ({
 
   const [file, setFile] = useState<File | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [isPending,setPending]=useState(false);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleFileChange = (event: any) => {
@@ -44,6 +45,7 @@ const UploadFile = ({
         return;
       }
 
+      setPending(true);
       const s3 = new S3({
         accessKeyId,
         secretAccessKey,
@@ -71,6 +73,10 @@ const UploadFile = ({
     } catch (error) {
       setError("Error uploading file: " + error);
     }
+    finally{
+      setPending(false);
+      setFile(null);
+    }
   };
 
   return (
@@ -94,11 +100,12 @@ const UploadFile = ({
         <label className="text-sm text-slate-500">{file?.name}</label>
         <Button
           onClick={handleUpload}
-          disabled={!file}
+          isDisabled={!file}
+          isLoading={isPending}
           className="flex items-center gap-2 border-2 bg-secondary border-secondary text-white
             rounded-lg py-2 px-4 hover:bg-secondary/70 font-semibold cursor-pointer"
         >
-          Upload
+          {isPending?'Uploading':'Upload'}
         </Button>
       </div>
 

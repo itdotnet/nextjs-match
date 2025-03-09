@@ -236,3 +236,13 @@ export async function completeSocialLoginProfile(data: ProfileSchema): Promise<A
         return { status: 'error', error: 'Something went wrong' }
     }
 }
+
+export async function getUserRole(){
+    const session=await auth();
+
+    const role=session?.user.role;
+
+    if(!role) throw new Error('Not in role');
+
+    return role;
+}
