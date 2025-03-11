@@ -5,11 +5,13 @@ import MemberSidebar from '../MemberSidebar';
 import { Card } from '@nextui-org/react';
 
 type ParamsProps= {
-    params: Promise<{userId:string,children:ReactNode}>;
+    children: ReactNode;
+    params: Promise<{userId:string}>;
 }
 
-const layout = async ({ params }: ParamsProps) => {
-    const {userId,children}=await params;
+const layout = async ({ children, params }: ParamsProps) => {
+    const {userId}=await params;
+    
     const member = await getMemberByUserId(userId);
 
     if (!member) return notFound();
