@@ -4,8 +4,12 @@ import React, { ReactNode } from 'react'
 import MemberSidebar from '../MemberSidebar';
 import { Card } from '@nextui-org/react';
 
-const layout = async ({ children, params }: { children: ReactNode, params: { userId: string } }) => {
-    const {userId}=await params;
+type ParamsProps= {
+    params: Promise<{userId:string,children:ReactNode}>;
+}
+
+const layout = async ({ params }: ParamsProps) => {
+    const {userId,children}=await params;
     const member = await getMemberByUserId(userId);
 
     if (!member) return notFound();
@@ -14,7 +18,7 @@ const layout = async ({ children, params }: { children: ReactNode, params: { use
 
     const navLinks = [
         { name: 'Profile', href: `${basePath}` },
-        { name: 'Photo', href: `${basePath}/photo` },
+        { name: 'Photos', href: `${basePath}/photo` },
         { name: 'Chat', href: `${basePath}/chat` }
     ];
 

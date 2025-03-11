@@ -3,11 +3,13 @@ import CardInnerWrapper from "@/components/CardInnerWrapper";
 import { notFound } from "next/navigation";
 import React from "react";
 
+type ParamsProps= {
+    params: Promise<{userId:string}>;
+}
+
 const MemberDetailedPage = async ({
   params,
-}: {
-  params: { userId: string };
-}) => {
+}: ParamsProps) => {
   const {userId}=await params;
   const member = await getMemberByUserId(userId);
 

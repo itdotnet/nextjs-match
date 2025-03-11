@@ -3,7 +3,11 @@ import MessageSidebar from './MessageSidebar'
 import { getMessageByContainer } from '../actions/messageActions'
 import MessageTable from './MessageTable';
 
-const MessagesPage =async ({searchParams}:{searchParams:{container:string}}) => {
+type SearchPageProps= {
+    searchParams: Promise<{container:string}>; // ✅ searchParams as a Promise
+}
+
+const MessagesPage =async ({searchParams}:SearchPageProps) => {
     const {container}=await searchParams;
     const {messages,nextCursor}=await getMessageByContainer(container);
 

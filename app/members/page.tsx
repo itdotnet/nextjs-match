@@ -6,7 +6,11 @@ import PaginationComponent from '@/components/PaginationComponent';
 import { GetMemberParams } from '@/types';
 import EmptyState from '@/components/EmptyState';
 
-const MembersPage = async ({ searchParams }: { searchParams: GetMemberParams }) => {
+type SearchPageProps= {
+    searchParams: Promise<GetMemberParams>; // ✅ searchParams as a Promise
+}
+
+const MembersPage = async ({ searchParams }: SearchPageProps) => {
     const { ageRange, gender, orderBy,withPhoto,pageNumber,pageSize } = await searchParams;
     const {items:members,totalCount} = await getMembers({ ageRange, gender, orderBy,withPhoto,pageNumber,pageSize });
     const likeIds = await fetchCurrentUserLikeIds();

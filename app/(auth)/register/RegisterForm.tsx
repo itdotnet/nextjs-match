@@ -4,7 +4,7 @@ import { registerUser } from '@/app/actions/authActions';
 import { profileSchema, registerSchema, RegisterSchema } from '@/lib/schemas/registerSchema';
 import { handleFormServerErrors } from '@/lib/util';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Card, CardHeader, CardBody, Button, Input } from '@nextui-org/react';
+import { Card, CardHeader, CardBody, Button } from '@nextui-org/react';
 import React, { useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form';
 import { GiPadlock } from 'react-icons/gi';

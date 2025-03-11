@@ -6,7 +6,11 @@ import { getAuthUserId } from "@/app/actions/authActions";
 import MessageList from "./MessageList";
 import { createChatId } from "@/lib/util";
 
-const ChatPage =async ({params}:{params:{userId:string}}) => {
+type ParamsProps= {
+  params: Promise<{userId:string}>; // ✅ searchParams as a Promise
+}
+
+const ChatPage =async ({params}:ParamsProps) => {
   const {userId}=await params;
   const currentUserId=await getAuthUserId();
   const messages=await getMessageThread(userId);

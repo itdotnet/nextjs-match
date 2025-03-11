@@ -7,7 +7,7 @@ import React, { useState } from "react";
 import { S3 } from "aws-sdk";
 import { PutObjectRequest } from "aws-sdk/clients/s3";
 import { HiPhoto } from "react-icons/hi2";
-import { Button, Spinner } from "@nextui-org/react";
+import { Button } from "@nextui-org/react";
 import { addImage } from "@/app/actions/userActions";
 import { useRouter } from "next/navigation";
 

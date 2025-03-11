@@ -2,7 +2,11 @@ import React from 'react'
 import { fetchCurrentUserLikeIds, fetchLikedMembers } from '../actions/like.actions'
 import ListsTab from './ListsTab';
 
-const ListsPage =async ({searchParams}:{searchParams:{type:string}}) => {
+type SearchPageProps= {
+    searchParams: Promise<{ type: string }>; // ✅ searchParams as a Promise
+}
+
+const ListsPage =async ({searchParams}:SearchPageProps) => {
     const {type}=await searchParams;
     const likeIds=await fetchCurrentUserLikeIds();
     const members=await fetchLikedMembers(type);

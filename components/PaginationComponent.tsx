@@ -3,7 +3,7 @@
 import usePaginationStore from '@/hooks/usePaginationStore';
 import { Pagination } from '@nextui-org/react'
 import clsx from 'clsx'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 
 const PaginationComponent = ({totalCount}:{totalCount:number}) => {
     const {pagination,setPage,setPageSize,setPagination}=usePaginationStore(state=>({

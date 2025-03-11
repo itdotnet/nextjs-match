@@ -1,8 +1,7 @@
 "use server";
 
-import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
-import { GetMemberParams, PaginatedResponse, UserFilters } from "@/types";
+import { GetMemberParams, PaginatedResponse } from "@/types";
 import { Member, Photo } from "@prisma/client";
 import { addYears } from "date-fns";
 import { getAuthUserId } from "./authActions";

@@ -4,7 +4,11 @@ import ResultMessage from "@/components/ResultMessage";
 import { Spinner } from "@nextui-org/react";
 import { MdOutlineMailOutline } from "react-icons/md";
 
-const VerifyEmail =async ({searchParams}:{searchParams:{token:string}}) => {
+type SearchPageProps= {
+    searchParams: Promise<{ token: string }>; // ✅ searchParams as a Promise
+}
+
+const VerifyEmail =async ({searchParams}:SearchPageProps) => {
     const {token}=await searchParams;
     const result=await verifyEmail(token);
 

@@ -2,6 +2,8 @@ import { getUnapprovedPhotos } from "@/app/actions/adminActions"
 import MemberPhotos from "@/components/MemberPhotos";
 import { Divider } from "@nextui-org/react";
 
+export const dynamic='force-dynamic';
+
 const PhotoModerationPage =async () => {
   const photos=await getUnapprovedPhotos();
 
