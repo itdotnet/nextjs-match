@@ -8,7 +8,6 @@ import { Member } from '@prisma/client/wasm'
 import Link from 'next/link'
 import React, { useState } from 'react'
 import { toggleLikeMember } from '../actions/like.actions';
-import { useRouter } from 'next/navigation';
 
 type Props = {
     member: Member
