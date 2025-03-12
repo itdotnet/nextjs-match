@@ -38,7 +38,6 @@ useEffect(() => {
     }
     else{
       reset();
-      router.refresh();
       setTimeout(() => {
         setFocus("text");
       }, 50);
